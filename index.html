@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Textbox Storage</title>
+        <script>
+            async function fetchValue() {
+                const response = await fetch("/get-value");
+                const data = await response.json();
+                document.getElementById("textbox").value = data.value;
+            }
+
+            async function saveValue() {
+                const value = document.getElementById("textbox").value;
+                await fetch("/save-value", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ value }),
+                });
+            }
+
+            window.onload = fetchValue;
+        </script>
+    </head>
+    <body>
+        <h1>Store Textbox Value</h1>
+        <input type="text" id="textbox" placeholder="Type something..." />
+        <button onclick="saveValue()">Save</button>
+    </body>
+</html>
